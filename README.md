@@ -4,8 +4,10 @@ The overviewed modules include
 [Mojolicious::Plugin::AssetPack](https://metacpan.org/pod/Mojolicious::Plugin::AssetPack), [Mojo::DOM](https://metacpan.org/pod/Mojo::DOM), [Mojo::JSON](https://metacpan.org/pod/Mojo::JSON),
 [Mojo::UserAgent](https://metacpan.org/pod/Mojo::UserAgent),
 [Mojo::URL](https://metacpan.org/pod/Mojo::URL),
-[Mojo::Base](https://metacpan.org/pod/Mojo::Base), and
+[Mojo::Base](https://metacpan.org/pod/Mojo::Base),
+[Mojo::Util](https://metacpan.org/pod/Mojo::Util), and
 [Mojo::ByteStream](https://metacpan.org/pod/Mojo::ByteStream).
+
 
 -----
 
