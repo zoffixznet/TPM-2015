@@ -225,10 +225,10 @@
 
                     <p>Error checking (sometimes this is OK):</p>
 
-<pre><code class="perl"> 1:    say $ua-&gt;new-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
+<pre><code class="perl"> 1:    say $ua-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
  2:
  3:    my $title = eval {
- 4:        $ua-&gt;new-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
+ 4:        $ua-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
  5:    } or die &quot;Huston, we&#39;ve got a problem!\n&quot;;
 </code></pre>
 
@@ -436,11 +436,33 @@
 </code></pre>
                 </section>
 
-
                 <section>
                     <h2>Mojolicious::Plugin::AssetPack</h2>
 
                     <p>Simple way to handle SASS, LESS, CSS, JS, CoffeeScript and even SPRITES!</p>
+
+<pre><code class="perl"> 1:    $self-&gt;plugin(&#39;AssetPack&#39;);
+ 2:
+ 3:    $self-&gt;asset(
+ 4:        &#39;app.js&#39; =&gt; qw{
+ 5:            https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+ 6:            /js/foo.js
+ 7:            /js/baz.coffee
+ 8:            /js/many-files/*
+ 9:        },
+10:    );
+11:
+12:    # In your template:
+13:    % asset &#39;app.js&#39;
+14:
+15:    # Which turns into something like
+16:    &lt;script src=&quot;/packed/app-92bc075894ba75d5e33cf9e7d1f7f3ad.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Mojolicious::Plugin::AssetPack</h2>
 
 <pre><code class="perl"> 1:    $self-&gt;asset(
  2:        &#39;app.css&#39; =&gt; qw{
