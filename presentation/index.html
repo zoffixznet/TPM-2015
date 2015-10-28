@@ -44,14 +44,13 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
+                    <p>
+                        <img src="cover.png" style="border: 0; box-shadow: none" height=200>
+                    </p>
 					<h2>Overview of the Mojolicious Toolkit</h2>
 
                     <p>
-                        <img src="https://raw.githubusercontent.com/kraih/mojo/master/lib/Mojolicious/resources/public/mojo/logo-black.png" style="border: 0; box-shadow: none">
-                    </p>
-
-                    <p>
-						by Pete <i>'Zoffix Znet'</i> Evstratov
+						by Pete <i style="opacity: .5">'Zoffix Znet'</i> Evstratov
 					</p>
 
                     <div class="intro-ref">
@@ -64,16 +63,15 @@
                     <p style="padding-top: 20px">This presentation is available at <a href="http://zoffix.com/TMP2015">TPM2015.zoffix.com</a></p>
 				</section>
 
-                <!--section>
+                <section>
                     <h2>Question Policy</h2>
-                    <p>
-                        If you want to <strong>expand</strong> on what I'm talking about, hold the question until the the end.
-                    </p>
 
                     <p>
-                        If you did not <strong>understand</strong> what I said or what I'm talking about, go ahead and raise your hand.
+                        If you did not understand what I said or what I'm talking about, simply raise your hand.
                     </p>
-                </section-->
+
+                    <p style="padding-top: 40px">This presentation is available at <a href="http://zoffix.com/TMP2015">TPM2015.zoffix.com</a></p>
+                </section>
 
 				<section>
 					<h2>It's not just a Web Framework</h2>
@@ -100,10 +98,12 @@
                         <li>
                             <code class="module">Mojo::Base</code>&mdash;Minimal base class
                         </li>
-                        <li><i>...and a few more</i></li>
+                        <li><i>...and several more</i></li>
                     </ul>
 
-                    <p class="push">All obtained by <code>cpanm Mojolicious</code></p>
+                    <p class="push">All obtained by <code>cpanm Mojolicious</code>
+                    <br>(<a href="https://metacpan.org/release/Mojolicious">https://metacpan.org/release/Mojolicious</a>)
+                    </p>
 				</section>
 
                 <section>
@@ -114,7 +114,7 @@
                     <p>You can think of it as an "array object":
                         <br>regular Perl array, but with methods</p>
 
-                    <pre><code>1:  my $c = Mojo::Collection->new(qw/foo bar baz baz boor ber/);
+                    <pre><code class="perl">1:  my $c = Mojo::Collection->new(qw/foo bar baz baz boor ber/);
 2:
 3:  $c->grep(qr/^b/)->join(', ')->say;       # prints "bar, baz, baz, boor, ber"
 4:  say join ',', grep /^b/, @$c;            # same thing
@@ -146,7 +146,7 @@
 
                     <p>Reference elements you want with <a href="https://metacpan.org/pod/Mojo::DOM::CSS#SELECTORS">CSS Selectors:</a></p>
 
-<pre><code>1:   my $dom = Mojo::DOM->new( $html_code );
+<pre><code class="perl">1:   my $dom = Mojo::DOM->new( $html_code );
 2:   say $dom->at('title')->all_text; # print the &lt;title&gt; of the page
 3:
 4:   say for map $_->{href}, $dom->find('a[href]')->each; # print all links
@@ -162,7 +162,7 @@
                 <section>
                     <h2>Mojo::DOM</h2>
 
-<pre><code>1:   $dom->find('td.name')  # Returns Mojo::Collection of Mojo::DOM objects
+<pre><code class="perl">1:   $dom->find('td.name')  # Returns Mojo::Collection of Mojo::DOM objects
 2:      ->map('all_text')   # Returns Mojo::Collection of plain text items
 3:      ->grep(qr/^B/)      # ---"---
 4:      ->uniq              # ---"---
@@ -184,7 +184,7 @@
 
                     <p>"Non-blocking I/O HTTP and WebSocket user agent"</p>
 
-<pre><code> 1:    my $ua = Mojo::UserAgent-&gt;new;
+<pre><code class="perl"> 1:    my $ua = Mojo::UserAgent-&gt;new;
  2:
  3:    # Regular, blocking GET
  4:    $ua-&gt;get(&#39;mojolicio.us&#39;);
@@ -206,7 +206,7 @@
 
                     <p>Error checking:</p>
 
-<pre><code> 1:    my $tx = $ua-&gt;post(
+<pre><code class="perl"> 1:    my $tx = $ua-&gt;post(
  2:        &#39;https://metacpan.org/search&#39; =&gt; form =&gt; { q =&gt; &#39;mojo&#39; }
  3:    ); # returns Mojo::Transaction::HTTP object
  4:
@@ -225,7 +225,7 @@
 
                     <p>Error checking (sometimes this is OK):</p>
 
-<pre><code> 1:    say $ua-&gt;new-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
+<pre><code class="perl"> 1:    say $ua-&gt;new-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
  2:
  3:    my $title = eval {
  4:        $ua-&gt;new-&gt;get(&#39;mojolicidsdso.us&#39;)-&gt;res-&gt;dom-&gt;at(&#39;title&#39;)-&gt;text;
@@ -240,7 +240,7 @@
 
                     <p>Let's look at return values:</p>
 
-<pre><code> 1:    $ua-&gt;get(&#39;http://example.com/&#39;)-&gt;res-&gt;dom-&gt;find(&#39;td.name&#39;)
+<pre><code class="perl"> 1:    $ua-&gt;get(&#39;http://example.com/&#39;)-&gt;res-&gt;dom-&gt;find(&#39;td.name&#39;)
  2:        -&gt;map(&#39;all_text&#39;)-&gt;grep(qr/^B/)-&gt;uniq-&gt;join(&#39;, &#39;)-&gt;say</code></pre>
                 </section>
 
@@ -249,7 +249,7 @@
 
                     <p>Let's look at return values:</p>
 
-<pre><code> 1:    $ua-&gt;get(&#39;http://example.com/&#39;)  # returns Mojo::Transaction::HTTP object
+<pre><code class="perl"> 1:    $ua-&gt;get(&#39;http://example.com/&#39;)  # returns Mojo::Transaction::HTTP object
  2:        -&gt;res                        # returns Mojo::Message::Response object
  3:        -&gt;dom                        # returns Mojo::DOM object
  4:        -&gt;find(&#39;td.name&#39;)            # returns Mojo::Collection of Mojo::DOMs
@@ -264,7 +264,7 @@
                     <p>How about JSON? Just call <code>-&gt;json</code>
                         instead of <code>-&gt;dom</code>!</p>
 
-<pre><code> 1:    say &quot;Buy: $_&quot;
+<pre><code class="perl"> 1:    say &quot;Buy: $_&quot;
  2:        for $ua-&gt;get(&#39;http://api.example.com/&#39;)-&gt;res-&gt;json-&gt;{products}-&gt;@*;
 </code></pre>
                 </section>
@@ -275,7 +275,7 @@
                     <p>How about JSON? Just call <code>-&gt;json</code>
                         instead of <code>-&gt;dom</code>!</p>
 
-<pre><code> 1:    say &quot;Buy: $_&quot;
+<pre><code class="perl"> 1:    say &quot;Buy: $_&quot;
  2:        for $ua-&gt;get(&#39;http://api.example.com/&#39;) # Mojo::Transaction::HTTP
  3:            -&gt;res                               # Mojo::Message::Response
  4:            -&gt;json                              # decode JSON
@@ -290,7 +290,7 @@
 
                 <section>
                     <h2>Read a complete file into a variable?</h2>
-<pre><code> 1:    # Eww
+<pre><code class="perl"> 1:    # Eww
  2:    open my $fh, &#39;&lt;&#39;, &#39;file.txt&#39; or die $!;
  3:    my $data = do { local $/; &lt;$fh&gt;; };
  4:
@@ -305,7 +305,7 @@
 
                 <section>
                     <h2>Dump a structure while debugging?</h2>
-<pre><code> 1:    # This
+<pre><code class="perl"> 1:    # This
  2:    use Data::Dumper;
  3:    say Dumper $data;
  4:
@@ -322,7 +322,7 @@
 
                 <section>
                     <h2>Trim whitespace at start/end</h2>
-<pre><code> 1:    $string =~ s/^\s+|\s+$//g;
+<pre><code class="perl"> 1:    $string =~ s/^\s+|\s+$//g;
  2:
  3:    # Or
  4:    $string =~ s/^\s+//;
@@ -332,7 +332,7 @@
 
                 <section>
                     <h2>Escaping stuff</h2>
-<pre><code> 1:    # URLs:
+<pre><code class="perl"> 1:    # URLs:
  2:    use URI::Encode qw/uri_encode/;
  3:    say uri_encode &#39;foo&amp;bar&amp;baz&#39;;
  4:
@@ -359,7 +359,7 @@
 
                     <p>Portable utility functions.</p>
 
-<pre><code> 1:    use Mojo::Util qw/slurp  dumper  trim  url_escape  xml_escape/;
+<pre><code class="perl"> 1:    use Mojo::Util qw/slurp  dumper  trim  url_escape  xml_escape/;
  2:
  3:    my $data = slurp &#39;file.txt&#39;;
  4:    dumper $data;
@@ -367,6 +367,147 @@
  6:    say url_encode &#39;foo&amp;bar&amp;baz&#39;;
  7:    say xml_escape &#39;&lt;foo&gt;&#39;;
 </code></pre>
+                </section>
+
+                <section>
+                    <h2>Mojo::Util</h2>
+
+                    <p>Portable utility functions.</p>
+
+<p><code>b64_decode</code>, <code>b64_encode</code>, <code>camelize</code>, <code>class_to_file</code>, <code>class_to_path</code>, <code>decamelize</code>, <code>decode</code>, <code>deprecated</code>, <code>dumper</code>, <code>encode</code>, <code>hmac_sha1_sum</code>, <code>html_unescape</code>, <code>md5_bytes</code>, <code>md5_sum</code>, <code>monkey_patch</code>, <code>punycode_decode</code>, <code>punycode_encode</code>, <code>quote</code>, <code>secure_compare</code>, <code>sha1_bytes</code>, <code>sha1_sum</code>, <code>slurp</code>, <code>split_cookie_header</code>, <code>split_header</code>, <code>spurt</code>, <code>squish</code>, <code>steady_time</code>, <code>tablify</code>, <code>term_escape</code>, <code>trim</code>, <code>unindent</code>, <code>unquote</code>, <code>url_escape</code>, <code>url_unescape</code>, <code>xml_escape</code>, <code>xor_encode</code>, <code>xss_escape</code>
+</p>
+                </section>
+
+                <section>
+                    <img src="outta-time.jpg" alt="">
+                </section>
+
+                <section>
+                    <h2>Mojo::ByteStream</h2>
+
+                    <p>Bytes with Mojo::Util functions as methods (more or less)</p>
+
+<pre><code class="perl"> 1:    my $stream = Mojo::ByteStream-&gt;new(&#39;foo bar baz&#39;)-&gt;quote;
+ 2:    say $stream; # prints &quot;foo bar baz&quot;
+ 3:
+ 4:    # prints Zm9vIGJhciBiYXo=
+ 5:    $stream-&gt;unquote-&gt;encode(&#39;UTF-8&#39;)-&gt;b64_encode(&#39;&#39;)-&gt;say;
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Mojo::URL</h2>
+
+                    <p>Handling of URLs</p>
+
+<pre><code class="perl"> 1:    my $url
+ 2:    = Mojo::URL-&gt;new(&#39;http://zoffix:pass@example.com:3000/foo?foo=bar#23&#39;);
+ 3:
+ 4:    say $url-&gt;scheme;   # http
+ 5:    say $url-&gt;userinfo; # zoffix:pass
+ 6:    say $url-&gt;host;     # example.com
+ 7:    say $url-&gt;port;     # 3000
+ 8:    say $url-&gt;path;     # /foo
+ 9:    say $url-&gt;query;    # foo=bar
+10:    say $url-&gt;fragment; # 23
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Mojo::Base</h2>
+
+                    <p>Minimal base class</p>
+
+<pre><code class="perl"> 1:    package Cat;
+ 2:    use Mojo::Base -base;
+ 3:
+ 4:    has name =&gt; &#39;Nyan&#39;;
+ 5:    has [qw(age weight)] =&gt; 4;
+ 6:
+ 7:    #############################
+ 8:    package main;
+ 9:    use Mojo::Base -strict;
+10:
+11:    my $mew = Cat-&gt;new(name =&gt; &#39;Longcat&#39;);
+12:    say $mew-&gt;age; # prints 4;
+13:
+14:    # Set age to 3, weight to 5, and then print the new age
+15:    say $mew-&gt;age(3)-&gt;weight(5)-&gt;age;
+</code></pre>
+                </section>
+
+
+                <section>
+                    <h2>Mojolicious::Plugin::AssetPack</h2>
+
+                    <p>Simple way to handle SASS, LESS, CSS, JS, CoffeeScript and even SPRITES!</p>
+
+<pre><code class="perl"> 1:    $self-&gt;asset(
+ 2:        &#39;app.css&#39; =&gt; qw{
+ 3:            https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css
+ 4:            /css/foo.css
+ 5:            /css/baz.sass
+ 6:            /css/many-files/*
+ 7:            sprites:///images/ui
+ 8:        },
+ 9:    );
+10:
+11:    # In your template:
+12:    % asset &#39;app.css&#39;
+13:
+14:    # Which turns into something like
+15:      &lt;link href=&quot;/packed/app-c6d1dccb38089e32837cafc728bb3bba.min.css&quot;
+16:        rel=&quot;stylesheet&quot;&gt;
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Mojolicious::Plugin::AssetPack</h2>
+
+                    <p>Sprite: a collection of many images stored as a single image to reduce the number of HTTP requests:</p>
+                    <p><img src="sprites.png" alt=""></p>
+                </section>
+
+                <section>
+                    <h2>Mojolicious::Plugin::AssetPack</h2>
+
+                    <p><code class="module">AssetPack</code> automatically
+                        loads all images referenced by <code>sprites:///</code> URL (e.g. <code>sprites:///images/ui</code>), combines them into a single image, and prepares
+                        the CSS file that looks something like this:
+                    </p>
+
+                    <pre><code class="css"> 1:    .ui { background: url(ui-5200164c30fb8660952969caf0cefa3d.png)
+ 2:        no-repeat; display: inline-block; }
+ 3:    .ui.social-rss { background-position: 0px -0px;
+ 4:        width: 34px; height: 30px; }
+ 5:    .ui.social-github { background-position: 0px -30px;
+ 6:        width: 40px; height: 40px; }
+ 7:    .ui.social-chrome { background-position: 0px -70px;
+ 8:        width: 32px; height: 32px; }
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Mojolicious::Plugin::AssetPack</h2>
+
+                    <p>That means to use sprites, all we need to do is:</p>
+                    <ol>
+                        <li>Save images into a directory</li>
+                        <li>Use markup like <code class="html">&lt;a href=&quot;http://github.com&quot; class=&quot;ui social-github&quot;&gt;</code> to reference an image in the sprite</li>
+                    </ol>
+                </section>
+
+                <section>
+                    <h2>Mojolicious::Plugin::AssetPack</h2>
+
+                    <p>BTW, <code class="module">AssetPack</code> will automatically minify your CSS/JS, when your app is running in <code>production</code> <a href="https://metacpan.org/pod/Mojolicious#mode">mode</a></p>
+                </section>
+
+
+                <section>
+                    <h2>Thank You!</h2>
+
+                    <p>Questions?</p>
                 </section>
 			</div>
 
